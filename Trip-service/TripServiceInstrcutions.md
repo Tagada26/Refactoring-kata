@@ -36,3 +36,9 @@ Imagine a social networking website for travellers:
     - TripService is stateless. Introducing state may cause multi-thread issues
 
 [Extracted rules from here](https://miro.com/app/board/uXjVOanLakQ=/)
+
+## Documentation 
+- https://jestjs.io/docs/manual-mocks
+- https://jestjs.io/docs/jest-object#jestmockmodulename-factory-options
+- https://javascript.plainenglish.io/how-to-mock-functions-classes-and-modules-with-jest-c724d0ffbf18
+
