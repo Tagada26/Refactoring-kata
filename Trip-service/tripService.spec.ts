@@ -1,6 +1,7 @@
 import "jest";
 import Trip from "./trip/Trip";
 import TripService from './trip/TripService' 
+import { loggedUser, userFriendWithLoggedUser, userRepo } from "./trip/TripServiceRepository";
 import User from "./user/User";
 
 //Documentation
@@ -40,15 +41,13 @@ describe("TripServiceShould", () => {
     it('should handle the case where the logged user is friend with the user for which they get trips', () => {
         //given
         const testableTripService = new TestableTripService()
-        const loggedUser = testableTripService.getLoggedUser() 
         const user = new User()
-        user.addFriend(loggedUser);
-        //when
+        user.addFriend(new User());
+        //when 
         const callFindTripsByUser =  testableTripService.getTripsByUser(user)
-
         //then
-        expect(callFindTripsByUser).toHaveLength(1)
-        expect(callFindTripsByUser[0]).toEqual('toto')
+        expect(callFindTripsByUser).toEqual([])
+        expect(callFindTripsByUser).toHaveLength(0)
     })
     
 
@@ -105,10 +104,10 @@ class FakeTripDAO {
 class TestableTripService extends TripService {
     
     public override findTripsByUser(user: User): Trip[] {
-        return ['toto']
+        const userData = userRepo.get(user);
+        return userData.trips
     }
     public override getLoggedUser(): User {
         return new User()
     }
-
 }

@@ -19,4 +19,12 @@ export default class User {
     public getTrips(): Trip[] {
         return this.trips;
     }
+    
+    public addTrips(trips: Trip[]): void {
+        this.trips.push(...trips);
+    }
+    
+    public isFriendOf(user: User): boolean {
+        return user.getFriends().includes(this);
+    }
 }
