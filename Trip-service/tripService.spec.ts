@@ -30,6 +30,7 @@ describe("TripServiceShould", () => {
     it("methode 2: classe fille :  ", () => {
         //given
         const testableTripService = new TestableTripService()
+        testableTripService.setLoggedUser(loggedUser);
         const user = new User()
         user.addFriend(new User());
         //when 
@@ -41,6 +42,8 @@ describe("TripServiceShould", () => {
     it('should handle the case where the logged user is friend with the user for which they get trips', () => {
         //given
         const testableTripService = new TestableTripService()
+        testableTripService.setLoggedUser(loggedUser);
+
         const user = userFriendWithLoggedUser
         user.addFriend(loggedUser);
         //when 
@@ -52,6 +55,8 @@ describe("TripServiceShould", () => {
     it('should handle the case where the logged user is friend with the user and the user has some trips', () => {
         //given
         const testableTripService = new TestableTripService()
+        testableTripService.setLoggedUser(loggedUser);
+
         const user = userFriendWithLoggedUserWithTrip
         user.addFriend(loggedUser);
         //when 
@@ -63,6 +68,8 @@ describe("TripServiceShould", () => {
     it('should handle the case where the logged user is friend with the user and the user has some trips', () => {
         //given
         const testableTripService = new TestableTripService()
+        testableTripService.setLoggedUser(loggedUser);
+
         const user = userFriendWithLoggedUserWithTrip
         user.addFriend(loggedUser);
         //when 
@@ -95,12 +102,17 @@ class FakeTripDAO {
     }
 }
 class TestableTripService extends TripService {
+    private loggedUser: User | null = null
     
     public override findTripsByUser(user: User): Trip[] {
         const userData = userRepo.get(user);
         return userData.trips
     }
-    public override getLoggedUser(): User {
-        return loggedUser
+    public override getLoggedUser(): any { // pas trouvé mieux pour le type de retour :/
+        return this.loggedUser
+    }
+
+    public setLoggedUser(user: User): void {
+        this.loggedUser = user;
     }
 }
