@@ -18,6 +18,7 @@ export default class TripService {
                 }
             }
 
+
             if (isFriend) {
                 tripList = this.findTripsByUser(user);
             }
@@ -27,8 +28,6 @@ export default class TripService {
             throw new UserNotLoggedInException();
         }
     }
-
-
 
     protected getLoggedUser(): User {
         return UserSession.getLoggedUser();

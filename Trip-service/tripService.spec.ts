@@ -1,7 +1,7 @@
 import "jest";
 import Trip from "./trip/Trip";
-import TripService from './trip/TripService' 
-import { loggedUser, userFriendWithLoggedUser, userRepo } from "./trip/TripServiceRepository";
+
+import TripService from './trip/TripService';
 import User from "./user/User";
 
 //Documentation
@@ -41,66 +41,59 @@ describe("TripServiceShould", () => {
     it('should handle the case where the logged user is friend with the user for which they get trips', () => {
         //given
         const testableTripService = new TestableTripService()
-        const user = new User()
-        user.addFriend(new User());
+        const user = userFriendWithLoggedUser
+        user.addFriend(loggedUser);
         //when 
         const callFindTripsByUser =  testableTripService.getTripsByUser(user)
         //then
         expect(callFindTripsByUser).toEqual([])
         expect(callFindTripsByUser).toHaveLength(0)
     })
-    
-
-    // it("methode 3: mock module  :  ", () => {
-    //     //given
-    //     //jest.resetModules();
-    //     jest.doMock<typeof import('./trip/TripDAO')>('./trip/TripDAO', () => {
-    //         return jest.fn().mockReturnValue([]);
-    //       });
-    //     const user = new User()
-    //     //when 
-    //     //const callFindTripsByUser =  testableTripService.getTripsByUser(user)
-    //     //then
-    //     expect(callFindTripsByUser).toEqual([])
-    //     expect(callFindTripsByUser).toHaveLength(0)
-    // });
-    // it.skip('hola', () => {
-    //     jest.resetModules();
-    //     const TripDAO = require('./trip/TripDAO')
-    //     jest.mock('./trip/TripDAO', () => {
-    //         return jest.fn(() => { return { 
-    //             default: {findTripsByUser: () => [] }, __esModule: true}})
-    //         })
-    //     const UserSession = require('./user/UserSession')
-    //     jest.mock('./user/UserSession', () => {
-    //         return jest.fn(() => { return { 
-    //             default: {
-    //                 getLoggedUser: () => new User()
-    //             },
-    //              __esModule: true,
-    //         }
-    //         })
-    //             })
-    //         })
-     
-    //     //when    
-    //     const user = new User()
-    //     const tripService = new TripService()
-    //     const callFindTripsByUser =  tripService.getTripsByUser(user)
-            
-    //     // then
-    //     expect(callFindTripsByUser).toEqual([])
-    //     expect(callFindTripsByUser).toHaveLength(0)
-
-    // })
-
+    it('should handle the case where the logged user is friend with the user and the user has some trips', () => {
+        //given
+        const testableTripService = new TestableTripService()
+        const user = userFriendWithLoggedUserWithTrip
+        user.addFriend(loggedUser);
+        //when 
+        const callFindTripsByUser =  testableTripService.getTripsByUser(user)
+        //then
+        expect(callFindTripsByUser).toEqual(expect.arrayContaining([trip]))
+        expect(callFindTripsByUser).toHaveLength(1)
+    })
+    it('should handle the case where the logged user is friend with the user and the user has some trips', () => {
+        //given
+        const testableTripService = new TestableTripService()
+        const user = userFriendWithLoggedUserWithTrip
+        user.addFriend(loggedUser);
+        //when 
+        const callFindTripsByUser =  testableTripService.getTripsByUser(user)
+        //then
+        expect(callFindTripsByUser).toEqual(expect.arrayContaining([trip]))
+        expect(callFindTripsByUser).toHaveLength(1)
+    })
 })
+
+
+const userRepo = new Map();
+const loggedUser = new User();
+const userFriendWithLoggedUser = new User();
+const userFriendWithLoggedUserWithTrip = new User();
+const trip = new Trip()
+
+
+userRepo.set(loggedUser, { trips: [], friends: []})
+userRepo.set(userFriendWithLoggedUser, { trips: [], friends: [loggedUser]})
+userRepo.set(userFriendWithLoggedUserWithTrip, { trips: [trip], friends: [loggedUser]})
+
+
+export default interface TripRepository {
+    findTripsByUser(user: User): Trip[];
+}
 class FakeTripDAO {
     public static findTripsByUser(user: User): Trip[] {
         return []
     }
 }
-
 class TestableTripService extends TripService {
     
     public override findTripsByUser(user: User): Trip[] {
@@ -108,6 +101,6 @@ class TestableTripService extends TripService {
         return userData.trips
     }
     public override getLoggedUser(): User {
-        return new User()
+        return loggedUser
     }
 }
