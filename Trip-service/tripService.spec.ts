@@ -65,18 +65,17 @@ describe("TripServiceShould", () => {
         expect(callFindTripsByUser).toEqual(expect.arrayContaining([trip]))
         expect(callFindTripsByUser).toHaveLength(1)
     })
-    it('should handle the case where the logged user is friend with the user and the user has some trips', () => {
+    it('should throw an error when logged user is null', () => {
         //given
         const testableTripService = new TestableTripService()
-        testableTripService.setLoggedUser(loggedUser);
+        // testableTripService.setLoggedUser(loggedUser);
 
         const user = userFriendWithLoggedUserWithTrip
         user.addFriend(loggedUser);
-        //when 
-        const callFindTripsByUser =  testableTripService.getTripsByUser(user)
+       
         //then
-        expect(callFindTripsByUser).toEqual(expect.arrayContaining([trip]))
-        expect(callFindTripsByUser).toHaveLength(1)
+        expect(() => testableTripService.getTripsByUser(user)).toThrow()
+
     })
 })
 
@@ -101,6 +100,7 @@ class FakeTripDAO {
         return []
     }
 }
+
 class TestableTripService extends TripService {
     private loggedUser: User | null = null
     
