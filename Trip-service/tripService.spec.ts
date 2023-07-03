@@ -65,7 +65,7 @@ describe("TripServiceShould", () => {
         expect(callFindTripsByUser).toEqual(expect.arrayContaining([trip]))
         expect(callFindTripsByUser).toHaveLength(1)
     })
-    it('should throw an error when logged user is null', () => {
+    it('should throw an error when logged user is not connected', () => {
         //given
         const testableTripService = new TestableTripService()
         // testableTripService.setLoggedUser(loggedUser);
@@ -75,7 +75,6 @@ describe("TripServiceShould", () => {
        
         //then
         expect(() => testableTripService.getTripsByUser(user)).toThrow()
-
     })
 })
 
