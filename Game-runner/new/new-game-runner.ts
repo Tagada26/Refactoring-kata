@@ -1,4 +1,4 @@
-import { Game } from "./game";
+import { Game } from "./new-game";
 
 export class GameRunner {
   public static main(): void {
@@ -9,14 +9,17 @@ export class GameRunner {
 
     let notAWinner;
     do {
-      game.roll(Math.floor(Math.random() * 6) + 1);
-      if (Math.floor(Math.random() * 10) == 7) {
+      game.roll(Math.floor(GameRunner.getRandomNumber() * 6) + 1);
+      if (Math.floor(GameRunner.getRandomNumber() * 10) == 7) {
         notAWinner = game.wrongAnswer();
       } else {
         notAWinner = game.wasCorrectlyAnswered();
       }
     } while (notAWinner);
   }
+  public static getRandomNumber() {
+    return Math.random();
+  }
 }
 
-GameRunner.main();
+// GameRunner.main();
