@@ -1,0 +1,127 @@
+(index) │             Values             │
+    ├─────────┼────────────────────────────────┤
+    │    0    │        'Chet was added'        │
+    │    1    │   'They are player number 1'   │
+    │    2    │        'Pat was added'         │
+    │    3    │   'They are player number 2'   │
+    │    4    │        'Sue was added'         │
+    │    5    │   'They are player number 3'   │
+    │    6    │  'Chet is the current player'  │
+    │    7    │     'They have rolled a 1'     │
+    │    8    │  \"Chet's new location is NaN\"  │
+    │    9    │     'The category is Rock'     │
+    │   10    │       'Rock Question 0'        │
+    │   11    │    'Answer was corrent!!!!'    │
+    │   12    │ 'Chet now has NaN Gold Coins.' │
+    │   13    │  'Pat is the current player'   │
+    │   14    │     'They have rolled a 1'     │
+    │   15    │   \"Pat's new location is 1\"    │
+    │   16    │   'The category is Science'    │
+    │   17    │      'Science Question 0'      │
+    │   18    │    'Answer was corrent!!!!'    │
+    │   19    │  'Pat now has 1 Gold Coins.'   │
+    │   20    │  'Sue is the current player'   │
+    │   21    │     'They have rolled a 1'     │
+    │   22    │   \"Sue's new location is 1\"    │
+    │   23    │   'The category is Science'    │
+    │   24    │      'Science Question 1'      │
+    │   25    │    'Answer was corrent!!!!'    │
+    │   26    │  'Sue now has 1 Gold Coins.'   │
+    │   27    │  'Chet is the current player'  │
+    │   28    │     'They have rolled a 1'     │
+    │   29    │  \"Chet's new location is NaN\"  │
+    │   30    │     'The category is Rock'     │
+    │   31    │       'Rock Question 1'        │
+    │   32    │    'Answer was corrent!!!!'    │
+    │   33    │ 'Chet now has NaN Gold Coins.' │
+    │   34    │  'Pat is the current player'   │
+    │   35    │     'They have rolled a 1'     │
+    │   36    │   \"Pat's new location is 2\"    │
+    │   37    │    'The category is Sports'    │
+    │   38    │      'Sports Question 0'       │
+    │   39    │    'Answer was corrent!!!!'    │
+    │   40    │  'Pat now has 2 Gold Coins.'   │
+    │   41    │  'Sue is the current player'   │
+    │   42    │     'They have rolled a 1'     │
+    │   43    │   \"Sue's new location is 2\"    │
+    │   44    │    'The category is Sports'    │
+    │   45    │      'Sports Question 1'       │
+    │   46    │    'Answer was corrent!!!!'    │
+    │   47    │  'Sue now has 2 Gold Coins.'   │
+    │   48    │  'Chet is the current player'  │
+    │   49    │     'They have rolled a 1'     │
+    │   50    │  \"Chet's new location is NaN\"  │
+    │   51    │     'The category is Rock'     │
+    │   52    │       'Rock Question 2'        │
+    │   53    │    'Answer was corrent!!!!'    │
+    │   54    │ 'Chet now has NaN Gold Coins.' │
+    │   55    │  'Pat is the current player'   │
+    │   56    │     'They have rolled a 1'     │
+    │   57    │   \"Pat's new location is 3\"    │
+    │   58    │     'The category is Rock'     │
+    │   59    │       'Rock Question 3'        │
+    │   60    │    'Answer was corrent!!!!'    │
+    │   61    │  'Pat now has 3 Gold Coins.'   │
+    │   62    │  'Sue is the current player'   │
+    │   63    │     'They have rolled a 1'     │
+    │   64    │   \"Sue's new location is 3\"    │
+    │   65    │     'The category is Rock'     │
+    │   66    │       'Rock Question 4'        │
+    │   67    │    'Answer was corrent!!!!'    │
+    │   68    │  'Sue now has 3 Gold Coins.'   │
+    │   69    │  'Chet is the current player'  │
+    │   70    │     'They have rolled a 1'     │
+    │   71    │  \"Chet's new location is NaN\"  │
+    │   72    │     'The category is Rock'     │
+    │   73    │       'Rock Question 5'        │
+    │   74    │    'Answer was corrent!!!!'    │
+    │   75    │ 'Chet now has NaN Gold Coins.' │
+    │   76    │  'Pat is the current player'   │
+    │   77    │     'They have rolled a 1'     │
+    │   78    │   \"Pat's new location is 4\"    │
+    │   79    │     'The category is Pop'      │
+    │   80    │        'Pop Question 0'        │
+    │   81    │    'Answer was corrent!!!!'    │
+    │   82    │  'Pat now has 4 Gold Coins.'   │
+    │   83    │  'Sue is the current player'   │
+    │   84    │     'They have rolled a 1'     │
+    │   85    │   \"Sue's new location is 4\"    │
+    │   86    │     'The category is Pop'      │
+    │   87    │        'Pop Question 1'        │
+    │   88    │    'Answer was corrent!!!!'    │
+    │   89    │  'Sue now has 4 Gold Coins.'   │
+    │   90    │  'Chet is the current player'  │
+    │   91    │     'They have rolled a 1'     │
+    │   92    │  \"Chet's new location is NaN\"  │
+    │   93    │     'The category is Rock'     │
+    │   94    │       'Rock Question 6'        │
+    │   95    │    'Answer was corrent!!!!'    │
+    │   96    │ 'Chet now has NaN Gold Coins.' │
+    │   97    │  'Pat is the current player'   │
+    │   98    │     'They have rolled a 1'     │
+    │   99    │   \"Pat's new location is 5\"    │
+    │   100   │   'The category is Science'    │
+    │   101   │      'Science Question 2'      │
+    │   102   │    'Answer was corrent!!!!'    │
+    │   103   │  'Pat now has 5 Gold Coins.'   │
+    │   104   │  'Sue is the current player'   │
+    │   105   │     'They have rolled a 1'     │
+    │   106   │   \"Sue's new location is 5\"    │
+    │   107   │   'The category is Science'    │
+    │   108   │      'Science Question 3'      │
+    │   109   │    'Answer was corrent!!!!'    │
+    │   110   │  'Sue now has 5 Gold Coins.'   │
+    │   111   │  'Chet is the current player'  │
+    │   112   │     'They have rolled a 1'     │
+    │   113   │  \"Chet's new location is NaN\"  │
+    │   114   │     'The category is Rock'     │
+    │   115   │       'Rock Question 7'        │
+    │   116   │    'Answer was corrent!!!!'    │
+    │   117   │ 'Chet now has NaN Gold Coins.' │
+    │   118   │  'Pat is the current player'   │
+    │   119   │     'They have rolled a 1'     │
+    │   120   │   \"Pat's new location is 6\"    │
+    │   121   │    'The category is Sports'    │
+    │   122   │      'Sports Question 2'       │
+    │   123   │    'Answer was corrent!!!!'    │
+    │   124   │  'Pat now has 6 Gold Coins.'   │

@@ -1,4 +1,4 @@
-import { Game } from "./old-name";
+import { Game } from "./old-game";
 
 export class GameRunner {
   public static main(): void {
@@ -18,7 +18,8 @@ export class GameRunner {
     } while (notAWinner);
   }
 
-  public static getRandomNumber() {
+  public static getRandomNumber(): number {
+    // throw new Error('coucou !!')
     return Math.random();
   }
 }
