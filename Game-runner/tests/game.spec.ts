@@ -17,7 +17,7 @@ describe("The test environment", () => {
     originalConsoleLog = console.log;
     console.log = (message: string) => {
       logHistory.push(message);
-      originalConsoleLog( message);
+      originalConsoleLog(message);
     };
   });
   afterEach(() => {
@@ -54,7 +54,8 @@ describe("The test environment", () => {
     expect(logHistory[0]).toEqual(oldGameRunnerLogHistory[0]);
     expect(logHistory).toEqual(expect.arrayContaining(oldGameRunnerLogHistory));
   });
-  it("should ", function () {
+  it.only("should ", function () {
+    let logHistory: string[] = [];
     // const arbData = (size: number, max: number = Number.MAX_SAFE_INTEGER) =>
     // fc.array(fc.integer(1, max), size, size);
     fc.assert(
@@ -62,56 +63,45 @@ describe("The test environment", () => {
         const buildRandomNumbers = () => {
           let num = 0;
           return () => {
-            const result = randomNumbers[num % randomNumbers.length]  ;
-            num++ ;
+            const result = randomNumbers[num % randomNumbers.length];
+            num++;
             return result;
           };
         };
 
-        GameRunner.getRandomNumber = buildRandomNumbers(); 
-        NewGameRunner.getRandomNumber = buildRandomNumbers()
+        GameRunner.getRandomNumber = buildRandomNumbers();
+        NewGameRunner.getRandomNumber = buildRandomNumbers();
+        
         // Faire un tableau de random number et se baser sur l'indice pour aller chercher les mêmes nombre dans game runner.
-
+        logHistory = [];
         GameRunner.main();
-        //originalConsoleLog(logHistory.join( "\n"))
+
         const oldGameRunnerLogHistory = [...logHistory];
         logHistory = [];
         NewGameRunner.main();
 
-        console.table(logHistory);
-        //expect(logHistory[0]).toEqual(oldGameRunnerLogHistory[0]);
-        expect(logHistory.join('\n')).toEqual(
-         oldGameRunnerLogHistory.join('\n')
-        );
+        //Then
+        expect(logHistory).toEqual(oldGameRunnerLogHistory);
       })
     );
   });
-  it.only("should ", function () {
+  it("should ", function () {
     // const arbData = (size: number, max: number = Number.MAX_SAFE_INTEGER) =>
     // fc.array(fc.integer(1, max), size, size);
-    // GameRunner.getRandomNumber = () => 0; 
-    // NewGameRunner.getRandomNumber = () => 0;
+    GameRunner.getRandomNumber = () => 0;
+    NewGameRunner.getRandomNumber = () => 0;
     // Faire un tableau de random number et se baser sur l'indice pour aller chercher les mêmes nombre dans game runner.
 
-   //GameRunner.main();
+    GameRunner.main();
     //originalConsoleLog(logHistory.join( "\n"))
-    console.log('coucou')
     const oldGameRunnerLogHistory = [...logHistory];
-    console.table('first run', oldGameRunnerLogHistory);
+
     logHistory = [];
-    console.log('coucou 2')
-    //NewGameRunner.main();
-    
-    console.table(logHistory);
-    console.table('second run', oldGameRunnerLogHistory);
+    NewGameRunner.main();
+
     //expect(logHistory[0]).toEqual(oldGameRunnerLogHistory[0]);
-    expect(logHistory.join('\n')).toEqual(
-        oldGameRunnerLogHistory.join('\n')
-        );
-    });
-    
+    expect(logHistory.join("\n")).toEqual(oldGameRunnerLogHistory.join("\n"));
+  });
 });
 
 // npm run test -- game.spec.js
-
-
