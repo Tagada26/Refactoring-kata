@@ -11,9 +11,9 @@ export class GameRunner {
     do {
       game.roll(Math.floor(GameRunner.getRandomNumber() * 6) + 1);
       if (Math.floor(GameRunner.getRandomNumber() * 10) == 7) {
-        notAWinner = game.wrongAnswer();
+        notAWinner = game.handleWrongAnswer();
       } else {
-        notAWinner = game.wasCorrectlyAnswered();
+        notAWinner = game.handleCorrectAnswer();
       }
     } while (notAWinner);
   }
