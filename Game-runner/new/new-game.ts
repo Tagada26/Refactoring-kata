@@ -3,7 +3,7 @@ export class Game {
   private playerPositions: Array<number> = [];
   private playerScores: Array<number> = [];
   private inPenaltyBox: Array<boolean> = [];
-  private currentPlayer: number = 0;
+  private currentPlayerIndex: number = 0;
   private isGettingOutOfPenaltyBox: boolean = false;
 
   private popQuestions: Array<string> = [];
@@ -26,43 +26,47 @@ export class Game {
 
   public add(name: string): boolean {
     this.players.push(name);
-    this.playerPositions[this.howManyPlayers()] = 0;
-    this.playerScores[this.howManyPlayers()] = 0;
-    this.inPenaltyBox[this.howManyPlayers()] = false;
+    this.playerPositions[this.numberOfPlayers] = 0;
+    this.playerScores[this.numberOfPlayers] = 0;
+    this.inPenaltyBox[this.numberOfPlayers] = false;
 
     console.log(`${name} was added`);
-    console.log(`They are player number ${this.howManyPlayers()}`);
+    console.log(`They are player number ${this.numberOfPlayers}`);
 
     return true;
   }
 
-  private howManyPlayers(): number {
+  private get numberOfPlayers(): number {
     return this.players.length;
   }
+  private get currentPlayer(): string {
+    return  this.players[this.currentPlayerIndex]
+  }
+
 
   public roll(roll: number) {
-    console.log(`${this.players[this.currentPlayer]} is the current player`);
+    console.log(`${this.currentPlayer} is the current player`);
     console.log(`They have rolled a ${roll}`);
 
-    if (this.inPenaltyBox[this.currentPlayer]) {
+    if (this.inPenaltyBox[this.currentPlayerIndex]) {
       if (roll % 2 != 0) {
         this.isGettingOutOfPenaltyBox = true;
 
         console.log(
           `${
-            this.players[this.currentPlayer]
+            this.currentPlayer
           } is getting out of the penalty box`
         );
-        this.playerPositions[this.currentPlayer] =
-          this.playerPositions[this.currentPlayer] + roll;
-        if (this.playerPositions[this.currentPlayer] > 11) {
-          this.playerPositions[this.currentPlayer] =
-            this.playerPositions[this.currentPlayer] - 12;
+        this.playerPositions[this.currentPlayerIndex] =
+          this.playerPositions[this.currentPlayerIndex] + roll;
+        if (this.playerPositions[this.currentPlayerIndex] > 11) {
+          this.playerPositions[this.currentPlayerIndex] =
+            this.playerPositions[this.currentPlayerIndex] - 12;
         }
 
         console.log(
-          `${this.players[this.currentPlayer]}'s new location is ${
-            this.playerPositions[this.currentPlayer]
+          `${this.currentPlayer}'s new location is ${
+            this.playerPositions[this.currentPlayerIndex]
           }`
         );
         console.log(`The category is ${this.currentCategory()}`);
@@ -70,103 +74,126 @@ export class Game {
       } else {
         console.log(
           `${
-            this.players[this.currentPlayer]
+            this.currentPlayer
           } is not getting out of the penalty box`
         );
         this.isGettingOutOfPenaltyBox = false;
       }
     } else {
-      this.playerPositions[this.currentPlayer] =
-        this.playerPositions[this.currentPlayer] + roll;
-      if (this.playerPositions[this.currentPlayer] > 11) {
-        this.playerPositions[this.currentPlayer] =
-          this.playerPositions[this.currentPlayer] - 12;
+      this.playerPositions[this.currentPlayerIndex] =
+        this.playerPositions[this.currentPlayerIndex] + roll;
+      if (this.playerPositions[this.currentPlayerIndex] > 11) {
+        this.playerPositions[this.currentPlayerIndex] =
+          this.playerPositions[this.currentPlayerIndex] - 12;
       }
 
       console.log(
-        `${this.players[this.currentPlayer]}'s new location is ${
-          this.playerPositions[this.currentPlayer]
+        `${this.currentPlayer}'s new location is ${
+          this.playerPositions[this.currentPlayerIndex]
         }`
       );
-      console.log("The category is " + this.currentCategory());
+      console.log(`The category is ${this.currentCategory()}`);
       this.askQuestion();
     }
   }
 
   private askQuestion(): void {
-    if (this.currentCategory() == "Pop") console.log(this.popQuestions.shift());
-    if (this.currentCategory() == "Science")
+    if (this.currentCategory() == "Pop") {
+      console.log(this.popQuestions.shift());
+    }
+    if (this.currentCategory() == "Science") {
       console.log(this.scienceQuestions.shift());
-    if (this.currentCategory() == "Sports")
+    }
+    if (this.currentCategory() == "Sports") {
       console.log(this.sportsQuestions.shift());
-    if (this.currentCategory() == "Rock")
+    }
+    if (this.currentCategory() == "Rock") {
       console.log(this.rockQuestions.shift());
+    }
   }
 
   private currentCategory(): string {
-    if (this.playerPositions[this.currentPlayer] == 0) return "Pop";
-    if (this.playerPositions[this.currentPlayer] == 4) return "Pop";
-    if (this.playerPositions[this.currentPlayer] == 8) return "Pop";
-    if (this.playerPositions[this.currentPlayer] == 1) return "Science";
-    if (this.playerPositions[this.currentPlayer] == 5) return "Science";
-    if (this.playerPositions[this.currentPlayer] == 9) return "Science";
-    if (this.playerPositions[this.currentPlayer] == 2) return "Sports";
-    if (this.playerPositions[this.currentPlayer] == 6) return "Sports";
-    if (this.playerPositions[this.currentPlayer] == 10) return "Sports";
+    if (this.playerPositions[this.currentPlayerIndex] == 0) {
+      return "Pop";
+    }
+    if (this.playerPositions[this.currentPlayerIndex] == 4) {
+      return "Pop";
+    }
+    if (this.playerPositions[this.currentPlayerIndex] == 8) {
+      return "Pop";
+    }
+    if (this.playerPositions[this.currentPlayerIndex] == 1) {
+      return "Science";
+    }
+    if (this.playerPositions[this.currentPlayerIndex] == 5) {
+      return "Science";
+    }
+    if (this.playerPositions[this.currentPlayerIndex] == 9) {
+      return "Science";
+    }
+    if (this.playerPositions[this.currentPlayerIndex] == 2) {
+      return "Sports";
+    }
+    if (this.playerPositions[this.currentPlayerIndex] == 6) {
+      return "Sports";
+    }
+    if (this.playerPositions[this.currentPlayerIndex] == 10) {
+      return "Sports";
+    }
     return "Rock";
   }
 
   private didPlayerWin(): boolean {
-    return !(this.playerScores[this.currentPlayer] == 6);
+    return !(this.playerScores[this.currentPlayerIndex] == 6);
   }
 
   public handleWrongAnswer(): boolean {
     console.log("Question was incorrectly answered");
     console.log(
-      `${this.players[this.currentPlayer]} was sent to the penalty box`
+      `${this.currentPlayer} was sent to the penalty box`
     );
-    this.inPenaltyBox[this.currentPlayer] = true;
+    this.inPenaltyBox[this.currentPlayerIndex] = true;
 
-    this.currentPlayer += 1;
-    if (this.currentPlayer == this.howManyPlayers()) this.currentPlayer = 0;
+    this.currentPlayerIndex += 1;
+    if (this.currentPlayerIndex == this.numberOfPlayers) this.currentPlayerIndex = 0;
     return true;
   }
 
   public handleCorrectAnswer(): boolean {
-    if (this.inPenaltyBox[this.currentPlayer]) {
+    if (this.inPenaltyBox[this.currentPlayerIndex]) {
       if (this.isGettingOutOfPenaltyBox) {
         console.log("Answer was correct!!!!");
-        this.playerScores[this.currentPlayer] += 1;
+        this.playerScores[this.currentPlayerIndex] += 1;
         console.log(
-          `${this.players[this.currentPlayer]} now has ${
-            this.playerScores[this.currentPlayer]
+          `${this.currentPlayer} now has ${
+            this.playerScores[this.currentPlayerIndex]
           } Gold Coins.`
         );
 
         var winner = this.didPlayerWin();
-        this.currentPlayer += 1;
-        if (this.currentPlayer == this.howManyPlayers()) this.currentPlayer = 0;
+        this.currentPlayerIndex += 1;
+        if (this.currentPlayerIndex == this.numberOfPlayers) {this.currentPlayerIndex = 0};
 
         return winner;
       } else {
-        this.currentPlayer += 1;
-        if (this.currentPlayer == this.howManyPlayers()) this.currentPlayer = 0;
+        this.currentPlayerIndex += 1;
+        if (this.currentPlayerIndex == this.numberOfPlayers) {this.currentPlayerIndex = 0};
         return true;
       }
     } else {
       console.log("Answer was corrent!!!!");
 
-      this.playerScores[this.currentPlayer] += 1;
+      this.playerScores[this.currentPlayerIndex] += 1;
       console.log(
-        `${this.players[this.currentPlayer]} now has ${
-          this.playerScores[this.currentPlayer]
+        `${this.currentPlayer} now has ${
+          this.playerScores[this.currentPlayerIndex]
         } Gold Coins.`
       );
 
       var winner = this.didPlayerWin();
 
-      this.currentPlayer += 1;
-      if (this.currentPlayer == this.howManyPlayers()) this.currentPlayer = 0;
+      this.currentPlayerIndex += 1;
+      if (this.currentPlayerIndex == this.numberOfPlayers) {this.currentPlayerIndex = 0};
 
       return winner;
     }
