@@ -10,7 +10,7 @@ export class GameRunner {
     let notAWinner;
     do {
       game.roll(Math.floor(GameRunner.getRandomNumber() * 6) + 1);
-      if (Math.floor(GameRunner.getRandomNumber() * 10) == 7) {
+      if (Math.floor(GameRunner.getRandomNumber() * 10) === 7) {
         notAWinner = game.handleWrongAnswer();
       } else {
         notAWinner = game.handleCorrectAnswer();

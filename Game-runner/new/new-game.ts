@@ -52,9 +52,7 @@ export class Game {
     }
     this.movePlayer(roll);
     this.askQuestion();
-  }
-
-  
+  }  
 
   private updatePlayerPenaltyBoxStatus(roll: number): 'in' | 'out' {
     if (this.inPenaltyBox[this.currentPlayerIndex]) {
@@ -84,53 +82,53 @@ export class Game {
 
   private askQuestion(): void {
     console.log(`The category is ${this.currentCategory()}`);
-    if (this.currentCategory() == "Pop") {
+    if (this.currentCategory() === "Pop") {
       console.log(this.popQuestions.shift());
     }
-    if (this.currentCategory() == "Science") {
+    if (this.currentCategory() === "Science") {
       console.log(this.scienceQuestions.shift());
     }
-    if (this.currentCategory() == "Sports") {
+    if (this.currentCategory() === "Sports") {
       console.log(this.sportsQuestions.shift());
     }
-    if (this.currentCategory() == "Rock") {
+    if (this.currentCategory() === "Rock") {
       console.log(this.rockQuestions.shift());
     }
   }
 
   private currentCategory(): string {
-    if (this.currentPlayerPosition == 0) {
+    if (this.currentPlayerPosition === 0) {
       return "Pop";
     }
-    if (this.currentPlayerPosition == 4) {
+    if (this.currentPlayerPosition === 4) {
       return "Pop";
     }
-    if (this.currentPlayerPosition == 8) {
+    if (this.currentPlayerPosition === 8) {
       return "Pop";
     }
-    if (this.currentPlayerPosition == 1) {
+    if (this.currentPlayerPosition === 1) {
       return "Science";
     }
-    if (this.currentPlayerPosition == 5) {
+    if (this.currentPlayerPosition === 5) {
       return "Science";
     }
-    if (this.currentPlayerPosition == 9) {
+    if (this.currentPlayerPosition === 9) {
       return "Science";
     }
-    if (this.currentPlayerPosition == 2) {
+    if (this.currentPlayerPosition === 2) {
       return "Sports";
     }
-    if (this.currentPlayerPosition == 6) {
+    if (this.currentPlayerPosition === 6) {
       return "Sports";
     }
-    if (this.currentPlayerPosition == 10) {
+    if (this.currentPlayerPosition === 10) {
       return "Sports";
     }
     return "Rock";
   }
 
   private didPlayerWin(): boolean {
-    return !(this.playerScores[this.currentPlayerIndex] == 6);
+    return !(this.playerScores[this.currentPlayerIndex] === 6);
   }
 
   public handleWrongAnswer(): boolean {
@@ -139,7 +137,7 @@ export class Game {
     this.inPenaltyBox[this.currentPlayerIndex] = true;
 
     this.currentPlayerIndex += 1;
-    if (this.currentPlayerIndex == this.numberOfPlayers)
+    if (this.currentPlayerIndex === this.numberOfPlayers)
       this.currentPlayerIndex = 0;
     return true;
   }
@@ -157,20 +155,20 @@ export class Game {
 
         var winner = this.didPlayerWin();
         this.currentPlayerIndex += 1;
-        if (this.currentPlayerIndex == this.numberOfPlayers) {
+        if (this.currentPlayerIndex === this.numberOfPlayers) {
           this.currentPlayerIndex = 0;
         }
 
         return winner;
       } else {
         this.currentPlayerIndex += 1;
-        if (this.currentPlayerIndex == this.numberOfPlayers) {
+        if (this.currentPlayerIndex === this.numberOfPlayers) {
           this.currentPlayerIndex = 0;
         }
         return true;
       }
     } else {
-      console.log("Answer was corrent!!!!");
+      console.log("Answer was correct!!!!"); 
 
       this.playerScores[this.currentPlayerIndex] += 1;
       console.log(
@@ -182,7 +180,7 @@ export class Game {
       var winner = this.didPlayerWin();
 
       this.currentPlayerIndex += 1;
-      if (this.currentPlayerIndex == this.numberOfPlayers) {
+      if (this.currentPlayerIndex === this.numberOfPlayers) {
         this.currentPlayerIndex = 0;
       }
 

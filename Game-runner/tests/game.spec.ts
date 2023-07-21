@@ -25,9 +25,6 @@ describe("The test environment", () => {
   });
 
   it.only("should ", function () {
-
-    // const arbData = (size: number, max: number = Number.MAX_SAFE_INTEGER) =>
-    // fc.array(fc.integer(1, max), size, size);
     fc.assert(
       fc.property(arbitraryNumbersGenerator, (randomNumbers) => {
         const filteredNumbers = randomNumbers.filter(value => value !== 1);
