@@ -46,21 +46,30 @@ export class Game {
     console.log(`${this.currentPlayer} is the current player`);
     console.log(`They have rolled a ${roll}`);
 
+    const penaltyBoxStatus = this.updatePlayerPenaltyBoxStatus(roll);
+    if (penaltyBoxStatus === 'in') {
+      return;
+    }
+    this.movePlayer(roll);
+    this.askQuestion();
+  }
+
+  
+
+  private updatePlayerPenaltyBoxStatus(roll: number): 'in' | 'out' {
     if (this.inPenaltyBox[this.currentPlayerIndex]) {
       if (roll % 2 === 0) {
         console.log(
           `${this.currentPlayer} is not getting out of the penalty box`
         );
         this.isGettingOutOfPenaltyBox = false;
-        return;
+        return 'in';
       }
 
       this.isGettingOutOfPenaltyBox = true;
-
       console.log(`${this.currentPlayer} is getting out of the penalty box`);
     }
-    this.movePlayer(roll);
-    this.askQuestion();
+    return 'out';
   }
 
   private movePlayer(roll: number) {
