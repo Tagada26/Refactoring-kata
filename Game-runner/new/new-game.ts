@@ -64,9 +64,9 @@ export class Game {
   }
 
   private movePlayer(roll: number) {
-    this.playerPositions[this.currentPlayer] = this.playerPositions[this.currentPlayer] + roll;
-    if (this.playerPositions[this.currentPlayer] > 11) {
-      this.playerPositions[this.currentPlayer] = this.playerPositions[this.currentPlayer] - 12;
+    this.playerPositions[this.currentPlayerIndex] = this.playerPositions[this.currentPlayerIndex] + roll;
+    if (this.playerPositions[this.currentPlayerIndex] > 11) {
+      this.playerPositions[this.currentPlayerIndex] = this.playerPositions[this.currentPlayerIndex] - 12;
     }
     console.log(
       `${this.currentPlayer}'s new location is ${this.currentPlayerPosition}`
