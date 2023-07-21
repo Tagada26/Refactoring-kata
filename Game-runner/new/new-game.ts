@@ -16,12 +16,8 @@ export class Game {
       this.popQuestions.push(`Pop Question ${i}`);
       this.scienceQuestions.push(`Science Question ${i}`);
       this.sportsQuestions.push(`Sports Question ${i}`);
-      this.rockQuestions.push(this.createRockQuestion(i));
+      this.rockQuestions.push(`Rock Question ${i}`);
     }
-  }
-
-  private createRockQuestion(index: number): string {
-    return `Rock Question ${index}`;
   }
 
   public add(name: string): boolean {
@@ -40,64 +36,45 @@ export class Game {
     return this.players.length;
   }
   private get currentPlayer(): string {
-    return  this.players[this.currentPlayerIndex]
+    return this.players[this.currentPlayerIndex];
   }
-
+  private get currentPlayerPosition(): number {
+    return this.playerPositions[this.currentPlayerIndex];
+  }
 
   public roll(roll: number) {
     console.log(`${this.currentPlayer} is the current player`);
     console.log(`They have rolled a ${roll}`);
 
     if (this.inPenaltyBox[this.currentPlayerIndex]) {
-      if (roll % 2 != 0) {
-        this.isGettingOutOfPenaltyBox = true;
-
+      if (roll % 2 === 0) {
         console.log(
-          `${
-            this.currentPlayer
-          } is getting out of the penalty box`
-        );
-        this.playerPositions[this.currentPlayerIndex] =
-          this.playerPositions[this.currentPlayerIndex] + roll;
-        if (this.playerPositions[this.currentPlayerIndex] > 11) {
-          this.playerPositions[this.currentPlayerIndex] =
-            this.playerPositions[this.currentPlayerIndex] - 12;
-        }
-
-        console.log(
-          `${this.currentPlayer}'s new location is ${
-            this.playerPositions[this.currentPlayerIndex]
-          }`
-        );
-        console.log(`The category is ${this.currentCategory()}`);
-        this.askQuestion();
-      } else {
-        console.log(
-          `${
-            this.currentPlayer
-          } is not getting out of the penalty box`
+          `${this.currentPlayer} is not getting out of the penalty box`
         );
         this.isGettingOutOfPenaltyBox = false;
-      }
-    } else {
-      this.playerPositions[this.currentPlayerIndex] =
-        this.playerPositions[this.currentPlayerIndex] + roll;
-      if (this.playerPositions[this.currentPlayerIndex] > 11) {
-        this.playerPositions[this.currentPlayerIndex] =
-          this.playerPositions[this.currentPlayerIndex] - 12;
+        return;
       }
 
-      console.log(
-        `${this.currentPlayer}'s new location is ${
-          this.playerPositions[this.currentPlayerIndex]
-        }`
-      );
-      console.log(`The category is ${this.currentCategory()}`);
-      this.askQuestion();
+      this.isGettingOutOfPenaltyBox = true;
+
+      console.log(`${this.currentPlayer} is getting out of the penalty box`);
     }
+    this.movePlayer(roll);
+    this.askQuestion();
+  }
+
+  private movePlayer(roll: number) {
+    this.playerPositions[this.currentPlayer] = this.playerPositions[this.currentPlayer] + roll;
+    if (this.playerPositions[this.currentPlayer] > 11) {
+      this.playerPositions[this.currentPlayer] = this.playerPositions[this.currentPlayer] - 12;
+    }
+    console.log(
+      `${this.currentPlayer}'s new location is ${this.currentPlayerPosition}`
+    );
   }
 
   private askQuestion(): void {
+    console.log(`The category is ${this.currentCategory()}`);
     if (this.currentCategory() == "Pop") {
       console.log(this.popQuestions.shift());
     }
@@ -113,31 +90,31 @@ export class Game {
   }
 
   private currentCategory(): string {
-    if (this.playerPositions[this.currentPlayerIndex] == 0) {
+    if (this.currentPlayerPosition == 0) {
       return "Pop";
     }
-    if (this.playerPositions[this.currentPlayerIndex] == 4) {
+    if (this.currentPlayerPosition == 4) {
       return "Pop";
     }
-    if (this.playerPositions[this.currentPlayerIndex] == 8) {
+    if (this.currentPlayerPosition == 8) {
       return "Pop";
     }
-    if (this.playerPositions[this.currentPlayerIndex] == 1) {
+    if (this.currentPlayerPosition == 1) {
       return "Science";
     }
-    if (this.playerPositions[this.currentPlayerIndex] == 5) {
+    if (this.currentPlayerPosition == 5) {
       return "Science";
     }
-    if (this.playerPositions[this.currentPlayerIndex] == 9) {
+    if (this.currentPlayerPosition == 9) {
       return "Science";
     }
-    if (this.playerPositions[this.currentPlayerIndex] == 2) {
+    if (this.currentPlayerPosition == 2) {
       return "Sports";
     }
-    if (this.playerPositions[this.currentPlayerIndex] == 6) {
+    if (this.currentPlayerPosition == 6) {
       return "Sports";
     }
-    if (this.playerPositions[this.currentPlayerIndex] == 10) {
+    if (this.currentPlayerPosition == 10) {
       return "Sports";
     }
     return "Rock";
@@ -149,13 +126,12 @@ export class Game {
 
   public handleWrongAnswer(): boolean {
     console.log("Question was incorrectly answered");
-    console.log(
-      `${this.currentPlayer} was sent to the penalty box`
-    );
+    console.log(`${this.currentPlayer} was sent to the penalty box`);
     this.inPenaltyBox[this.currentPlayerIndex] = true;
 
     this.currentPlayerIndex += 1;
-    if (this.currentPlayerIndex == this.numberOfPlayers) this.currentPlayerIndex = 0;
+    if (this.currentPlayerIndex == this.numberOfPlayers)
+      this.currentPlayerIndex = 0;
     return true;
   }
 
@@ -172,12 +148,16 @@ export class Game {
 
         var winner = this.didPlayerWin();
         this.currentPlayerIndex += 1;
-        if (this.currentPlayerIndex == this.numberOfPlayers) {this.currentPlayerIndex = 0};
+        if (this.currentPlayerIndex == this.numberOfPlayers) {
+          this.currentPlayerIndex = 0;
+        }
 
         return winner;
       } else {
         this.currentPlayerIndex += 1;
-        if (this.currentPlayerIndex == this.numberOfPlayers) {this.currentPlayerIndex = 0};
+        if (this.currentPlayerIndex == this.numberOfPlayers) {
+          this.currentPlayerIndex = 0;
+        }
         return true;
       }
     } else {
@@ -193,7 +173,9 @@ export class Game {
       var winner = this.didPlayerWin();
 
       this.currentPlayerIndex += 1;
-      if (this.currentPlayerIndex == this.numberOfPlayers) {this.currentPlayerIndex = 0};
+      if (this.currentPlayerIndex == this.numberOfPlayers) {
+        this.currentPlayerIndex = 0;
+      }
 
       return winner;
     }

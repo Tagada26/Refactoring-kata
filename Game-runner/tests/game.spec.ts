@@ -23,23 +23,16 @@ describe("The test environment", () => {
   afterEach(() => {
     console.log = originalConsoleLog;
   });
-  it("should pass", () => {
-    expect(true).toBeTruthy();
-  });
-
-  it("should access game", function () {
-    expect(GameRunner).not.toBeUndefined();
-  });
 
   it.only("should ", function () {
-    let logHistory: string[] = [];
+
     // const arbData = (size: number, max: number = Number.MAX_SAFE_INTEGER) =>
     // fc.array(fc.integer(1, max), size, size);
     fc.assert(
       fc.property(arbitraryNumbersGenerator, (randomNumbers) => {
         const filteredNumbers = randomNumbers.filter(value => value !== 1);
         const buildRandomNumbers = () => {
-          let num = 0;
+          let num = 0; 
           return () => {
             const result = filteredNumbers[num % filteredNumbers.length];
             num++;
@@ -50,7 +43,6 @@ describe("The test environment", () => {
         GameRunner.getRandomNumber = buildRandomNumbers();
         NewGameRunner.getRandomNumber = buildRandomNumbers();
 
-        // Faire un tableau de random number et se baser sur l'indice pour aller chercher les mêmes nombre dans game runner.
         logHistory = [];
         GameRunner.main();
 
