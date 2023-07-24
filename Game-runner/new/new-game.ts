@@ -1,3 +1,5 @@
+export type PlayerStatus = "winner" | "notAWinner";
+
 export class Game {
   private players: Array<string> = [];
   private playerPositions: Array<number> = [];
@@ -110,17 +112,19 @@ export class Game {
     );
   }
 
-  private didPlayerWin(): boolean {
-    return (this.playerScores[this.currentPlayerIndex] === 6);
+  private didPlayerWin(): PlayerStatus {
+    return this.playerScores[this.currentPlayerIndex] === 6
+      ? "winner"
+      : "notAWinner";
   }
 
-  public handleWrongAnswer(): boolean {
+  public handleWrongAnswer(): PlayerStatus {
     console.log("Question was incorrectly answered");
     console.log(`${this.currentPlayer} was sent to the penalty box`);
     this.inPenaltyBox[this.currentPlayerIndex] = true;
 
     this.changeForNextPlayer();
-    return false;
+    return "notAWinner";
   }
 
   private changeForNextPlayer() {
@@ -130,14 +134,14 @@ export class Game {
     }
   }
 
-  public handleCorrectAnswer(): boolean {
+  public handleCorrectAnswer(): PlayerStatus {
     const isPlayerTrappedInPenaltyBox =
       this.inPenaltyBox[this.currentPlayerIndex] &&
       !this.isGettingOutOfPenaltyBox;
 
     if (isPlayerTrappedInPenaltyBox) {
       this.changeForNextPlayer();
-      return false;
+      return "notAWinner";
     }
 
     console.log("Answer was correct!!!!");
@@ -149,8 +153,8 @@ export class Game {
       } Gold Coins.`
     );
 
-    const winner = this.didPlayerWin();
+    const playerStatus = this.didPlayerWin();
     this.changeForNextPlayer();
-    return winner;
+    return playerStatus;
   }
 }
