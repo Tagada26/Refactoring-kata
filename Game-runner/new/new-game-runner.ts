@@ -7,15 +7,15 @@ export class GameRunner {
     game.add("Pat");
     game.add("Sue");
 
-    let notAWinner;
+    let winner;
     do {
       game.roll(Math.floor(GameRunner.getRandomNumber() * 6) + 1);
       if (Math.floor(GameRunner.getRandomNumber() * 10) === 7) {
-        notAWinner = game.handleWrongAnswer();
+        winner = game.handleWrongAnswer();
       } else {
-        notAWinner = game.handleCorrectAnswer();
+        winner = game.handleCorrectAnswer();
       }
-    } while (notAWinner);
+    } while (!winner);
   }
   public static getRandomNumber() {
     return Math.random();
