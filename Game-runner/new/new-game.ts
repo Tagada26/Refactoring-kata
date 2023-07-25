@@ -1,32 +1,33 @@
 export type PlayerStatus = "winner" | "notAWinner";
 
+const BOARD_SIZE = 12;
+const CATEGORIES = ["Pop", "Science", "Sports", "Rock"];
+
+type Player = {
+  name: string;
+  position: number;
+  score: number;
+  inPenaltyBox: boolean;
+};
+
 export class Game {
-  private players: Array<string> = [];
-  private playerPositions: Array<number> = [];
-  private playerScores: Array<number> = [];
-  private inPenaltyBox: Array<boolean> = [];
+  private players: Array<Player> = [];
   private currentPlayerIndex: number = 0;
   private isGettingOutOfPenaltyBox: boolean = false;
 
-  private popQuestions: Array<string> = [];
-  private scienceQuestions: Array<string> = [];
-  private sportsQuestions: Array<string> = [];
-  private rockQuestions: Array<string> = [];
+  private questions: Record<string, string[]> = {};
 
   constructor() {
-    for (let i = 0; i < 50; i++) {
-      this.popQuestions.push(`Pop Question ${i}`);
-      this.scienceQuestions.push(`Science Question ${i}`);
-      this.sportsQuestions.push(`Sports Question ${i}`);
-      this.rockQuestions.push(`Rock Question ${i}`);
+    for(const category of CATEGORIES) {
+      this.questions[category] = [];
+      for (let i = 0; i < 50; i++) {
+        this.questions[category].push(`${category} Question ${i}`);
+      }
     }
   }
 
   public add(name: string): boolean {
-    this.players.push(name);
-    this.playerPositions[this.numberOfPlayers] = 0;
-    this.playerScores[this.numberOfPlayers] = 0;
-    this.inPenaltyBox[this.numberOfPlayers] = false;
+    this.players.push({ name, position: 0, score: 0, inPenaltyBox: false });
 
     console.log(`${name} was added`);
     console.log(`They are player number ${this.numberOfPlayers}`);
@@ -37,15 +38,12 @@ export class Game {
   private get numberOfPlayers(): number {
     return this.players.length;
   }
-  private get currentPlayer(): string {
+  private get currentPlayer(): Player {
     return this.players[this.currentPlayerIndex];
-  }
-  private get currentPlayerPosition(): number {
-    return this.playerPositions[this.currentPlayerIndex];
   }
 
   public roll(roll: number) {
-    console.log(`${this.currentPlayer} is the current player`);
+    console.log(`${this.currentPlayer.name} is the current player`);
     console.log(`They have rolled a ${roll}`);
 
     const penaltyBoxStatus = this.updatePlayerPenaltyBoxStatus(roll);
@@ -57,71 +55,52 @@ export class Game {
   }
 
   private updatePlayerPenaltyBoxStatus(roll: number): "in" | "out" {
-    if (this.inPenaltyBox[this.currentPlayerIndex]) {
+    if (this.currentPlayer.inPenaltyBox) {
       if (roll % 2 === 0) {
         console.log(
-          `${this.currentPlayer} is not getting out of the penalty box`
+          `${this.currentPlayer.name} is not getting out of the penalty box`
         );
         this.isGettingOutOfPenaltyBox = false;
         return "in";
       }
 
       this.isGettingOutOfPenaltyBox = true;
-      console.log(`${this.currentPlayer} is getting out of the penalty box`);
+      console.log(
+        `${this.currentPlayer.name} is getting out of the penalty box`
+      );
     }
     return "out";
   }
 
   private movePlayer(roll: number) {
-    this.playerPositions[this.currentPlayerIndex] =
-      this.playerPositions[this.currentPlayerIndex] + roll;
-    if (this.playerPositions[this.currentPlayerIndex] > 11) {
-      this.playerPositions[this.currentPlayerIndex] =
-        this.playerPositions[this.currentPlayerIndex] - 12;
-    }
+    this.currentPlayer.position =
+      (this.currentPlayer.position + roll) % BOARD_SIZE;
     console.log(
-      `${this.currentPlayer}'s new location is ${this.currentPlayerPosition}`
+      `${this.currentPlayer.name}'s new location is ${this.currentPlayer.position}`
     );
   }
 
   private askQuestion(): void {
     const currentCategory = this.currentCategory();
     console.log(`The category is ${currentCategory}`);
-
-    switch (currentCategory) {
-      case "Pop":
-        console.log(this.popQuestions.shift());
-        break;
-      case "Science":
-        console.log(this.scienceQuestions.shift());
-        break;
-      case "Sports":
-        console.log(this.sportsQuestions.shift());
-        break;
-      case "Rock":
-        console.log(this.rockQuestions.shift());
-        break;
-    }
+    console.log(this.questions[currentCategory].shift());
   }
 
   private currentCategory(): string {
-    const categories = ["Pop", "Science", "Sports", "Rock"];
     return (
-      categories[this.currentPlayerPosition % categories.length] ||
-      categories[categories.length - 1]
+      CATEGORIES[this.currentPlayer.position % CATEGORIES.length] ||
+      CATEGORIES[CATEGORIES.length - 1]
     );
   }
 
   private didPlayerWin(): PlayerStatus {
-    return this.playerScores[this.currentPlayerIndex] === 6
-      ? "winner"
-      : "notAWinner";
+    return this.currentPlayer.score === 6 ? "winner" : "notAWinner";
   }
 
   public handleWrongAnswer(): PlayerStatus {
     console.log("Question was incorrectly answered");
-    console.log(`${this.currentPlayer} was sent to the penalty box`);
-    this.inPenaltyBox[this.currentPlayerIndex] = true;
+    console.log(`${this.currentPlayer.name} was sent to the penalty box`);
+    this.currentPlayer.inPenaltyBox = true;
 
     this.changeForNextPlayer();
     return "notAWinner";
@@ -136,8 +115,7 @@ export class Game {
 
   public handleCorrectAnswer(): PlayerStatus {
     const isPlayerTrappedInPenaltyBox =
-      this.inPenaltyBox[this.currentPlayerIndex] &&
-      !this.isGettingOutOfPenaltyBox;
+      this.currentPlayer.inPenaltyBox && !this.isGettingOutOfPenaltyBox;
 
     if (isPlayerTrappedInPenaltyBox) {
       this.changeForNextPlayer();
@@ -146,11 +124,9 @@ export class Game {
 
     console.log("Answer was correct!!!!");
 
-    this.playerScores[this.currentPlayerIndex] += 1;
+    this.currentPlayer.score += 1;
     console.log(
-      `${this.currentPlayer} now has ${
-        this.playerScores[this.currentPlayerIndex]
-      } Gold Coins.`
+      `${this.currentPlayer.name} now has ${this.currentPlayer.score} Gold Coins.`
     );
 
     const playerStatus = this.didPlayerWin();
