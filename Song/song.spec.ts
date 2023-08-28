@@ -1,6 +1,64 @@
-describe('', () => {
-    it('', () => {
+import { buildSong } from "./song"
 
-        
-    })
+describe('Song Kata', () => {
+
+const initialSong = `There was an old lady who swallowed a fly.
+I don't know why she swallowed a fly - perhaps she'll die!
+
+There was an old lady who swallowed a spider;
+That wriggled and wiggled and tickled inside her.
+She swallowed the spider to catch the fly;
+I don't know why she swallowed a fly - perhaps she'll die!
+
+There was an old lady who swallowed a bird;
+How absurd to swallow a bird.
+She swallowed the bird to catch the spider,
+She swallowed the spider to catch the fly;
+I don't know why she swallowed a fly - perhaps she'll die!
+
+There was an old lady who swallowed a cat;
+Fancy that to swallow a cat!
+She swallowed the cat to catch the bird,
+She swallowed the bird to catch the spider,
+She swallowed the spider to catch the fly;
+I don't know why she swallowed a fly - perhaps she'll die!
+
+There was an old lady who swallowed a dog;
+What a hog, to swallow a dog!
+She swallowed the dog to catch the cat,
+She swallowed the cat to catch the bird,
+She swallowed the bird to catch the spider,
+She swallowed the spider to catch the fly;
+I don't know why she swallowed a fly - perhaps she'll die!
+
+There was an old lady who swallowed a cow;
+I don't know how she swallowed a cow!
+She swallowed the cow to catch the dog,
+She swallowed the dog to catch the cat,
+She swallowed the cat to catch the bird,
+She swallowed the bird to catch the spider,
+She swallowed the spider to catch the fly;
+I don't know why she swallowed a fly - perhaps she'll die!
+
+There was an old lady who swallowed a horse...
+...She's dead, of course!`
+
+it('Should return initial song with variable animals', () => {
+
+//when 
+const newSong = buildSong()
+//then 
+expect(newSong).toBe(initialSong)
+
 })
+it('Should return initial song when provided with initial animals', () => {
+//given
+const initialAnimals = ['fly', 'spider', 'bird', 'cat', 'dog', 'cow', 'horse']
+//when 
+const newSong = buildSong(initialAnimals)
+//then 
+expect(newSong).toBe(initialSong)
+
+})
+})
+
