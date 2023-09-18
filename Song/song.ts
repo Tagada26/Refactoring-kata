@@ -44,3 +44,9 @@ There was an old lady who swallowed a ${animals[6]}...
 const song = buildSong()
 
 console.log(song)
+
+const obj = {
+    'lalla': 'lolo',
+    'tada': 'tada2'
+}
+console.log(obj['tada']) //?

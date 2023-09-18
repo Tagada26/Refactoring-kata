@@ -60,5 +60,15 @@ const newSong = buildSong(initialAnimals)
 expect(newSong).toBe(initialSong)
 
 })
+it('Should return initial song when provided with initial animals', () => {
+//given
+const initialAnimals = ['fly', 'spider', 'bird', 'cat', 'dog', 'cow', 'horse']
+//when 
+const newSong = buildSong(initialAnimals)
+//then 
+expect(newSong).toBe(initialSong)
+
 })
+})
+
 
