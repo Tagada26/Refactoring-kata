@@ -1,27 +1,17 @@
 const A = 65;
 const buildDiamond = (seed: string) => {
     const seedPosition = seed.charCodeAt(0) - 'A'.charCodeAt(0); //?
-    let result = '';
+    let result = seed === 'A' ? 'A' : 'A\n';
     
-    for(let i = 0; i <= seedPosition; i++) {
-        result += getLetter(i); 
-        if(i !== 0 ) {
-            result += getLetter(i);
-        }
-        if(seed !== 'A') {
-            result += '\n';
-        }
+    for(let i = 1; i <= seedPosition; i++) {
+        result += getLetter(i) + getLetter(i) + '\n'; 
     }
 
-    for(let i = (seedPosition - 1) ; i >= 0 ; i--) {
-        result += getLetter(i); 
-        if(i !== 0 ) {
-            result += getLetter(i);
-        }
-        if(i !== seedPosition ) {
-            result += '\n';
-        }
+    for(let i = (seedPosition - 1) ; i >= 1 ; i--) {
+        result += getLetter(i) + getLetter(i) + '\n'; 
     }
+
+    result += seed === 'A' ? '' : 'A'
 
     return result //?
 };
